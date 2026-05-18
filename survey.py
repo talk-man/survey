@@ -7,87 +7,169 @@ Original file is located at
     https://colab.research.google.com/drive/1BdvdPeD23HfzLErBIPLkCI1DsjegLFke
 """
 
-print("Hi Love <3")
-input("Hit enter to continue")
-print("You will be asked some very hard questions in a while, this is a very important survey, so be honest All THE BEST")
-input("Hit enter to continue")
-while True:
-  answer = input("""How many times did i say 'I Love You' to you in that auto?
-  a) Once
-  b) Twice
-  c) Three Times
-  d) So many times because i love u that much """)
+import streamlit as st
 
-  if answer.lower() == "d":
-     print("CORRECT ANSWER WOHOOO")
+st.set_page_config(page_title="Love Survey 💖", page_icon="❤️")
 
-     break
-  else:
-     print("HAWW, NO!! ANS AGAIN")
+# Session state initialization
+if "step" not in st.session_state:
+    st.session_state.step = 0
 
-print("Very gooood, ready for next question?")
-input("Hit enter to continue")
+if "attempt" not in st.session_state:
+    st.session_state.attempt = 0
 
-while True:
-  answer = input("""What was the first flower i gave you ?
-  a) Rose
-  b) Sunflower
-  c) Lily
-  d) Lotus """)
 
-  if answer.lower() == "d":
-     print("CORRECT ANSWER WOHOOO")
+def next_step():
+    st.session_state.step += 1
 
-     break
-  else:
-     print("NOOOO, remember again")
 
-print("Wow you are good at this, now next question, readyy?")
-input("Hit enter to continue")
+st.title("💌 Love Survey 💌")
 
-while True:
-  answer = input("""At which place have we met the most?
-  a) CP
-  b) Iffco chowk bus stand
-  c) Sundar nursery
-  d) Deer park """)
+# STEP 0
+if st.session_state.step == 0:
+    st.write("Hi Love <3")
+    if st.button("Hit enter to continue"):
+        next_step()
 
-  if answer.lower() == "d":
-     print("CORRECT ANSWER WOHOOO")
-     break
-  else:
-     print(" Haha, close one.. try again")
+# STEP 1
+elif st.session_state.step == 1:
+    st.write(
+        "You will be asked some very hard questions in a while, this is a very important survey, so be honest. ALL THE BEST 💖"
+    )
+    if st.button("Continue"):
+        next_step()
 
-print("GREAT, next one's a rhetorical question")
-input("Hit enter to continue")
+# STEP 2 - Question 1
+elif st.session_state.step == 2:
+    st.subheader("Question 1")
+    answer = st.radio(
+        "How many times did I say 'I Love You' to you in that auto?",
+        ["a", "b", "c", "d"],
+        format_func=lambda x: {
+            "a": "Once",
+            "b": "Twice",
+            "c": "Three Times",
+            "d": "So many times because I love u that much",
+        }[x],
+    )
 
-print("Who is the most beautiful girl in the world?..any guesses?")
-input("Hit enter to continue")
-print("YES YOU GUESSED IT RIGHT..ITS YOUUUUUU")
-input("Hit enter to continue")
+    if st.button("Submit"):
+        if answer == "d":
+            st.success("CORRECT ANSWER WOHOOO ❤️")
+            next_step()
+        else:
+            st.error("HAWW, NO!! ANS AGAIN")
 
-print("Now the last and most important question...hold your breath...")
-input("Hit enter to continue")
+# STEP 3
+elif st.session_state.step == 3:
+    st.write("Very gooood, ready for next question?")
+    if st.button("Next"):
+        next_step()
 
-attempt = 0
+# STEP 4 - Question 2
+elif st.session_state.step == 4:
+    st.subheader("Question 2")
+    answer = st.radio(
+        "What was the first flower I gave you?",
+        ["a", "b", "c", "d"],
+        format_func=lambda x: {
+            "a": "Rose",
+            "b": "Sunflower",
+            "c": "Lily",
+            "d": "Lotus",
+        }[x],
+    )
 
-while True:
-  answer = input("DO YOU LOVE ME? (i dare you to say no)")
-  if answer.lower()== "yes":
-    print("I LOVE YOU TOO BABY")
-    break
+    if st.button("Submit"):
+        if answer == "d":
+            st.success("CORRECT ANSWER WOHOOO 🌸")
+            next_step()
+        else:
+            st.error("NOOOO, remember again")
 
-  else:
-    attempt += 1
-    if attempt == 1:
-      print("WRONG haha say no again i dare you")
+# STEP 5
+elif st.session_state.step == 5:
+    st.write("Wow you are good at this, now next question, readyy?")
+    if st.button("Next"):
+        next_step()
 
-    elif attempt == 2:
-      print("PLSS SAY YESSS PLSSSSSSSSSS")
+# STEP 6 - Question 3
+elif st.session_state.step == 6:
+    st.subheader("Question 3")
+    answer = st.radio(
+        "At which place have we met the most?",
+        ["a", "b", "c", "d"],
+        format_func=lambda x: {
+            "a": "CP",
+            "b": "Iffco chowk bus stand",
+            "c": "Sundar nursery",
+            "d": "Deer park",
+        }[x],
+    )
 
-    else:
-      print("I GOT ALL DAY UNTILL YOU SAY YESS")
-input("Hit enter to continue")
-print("I know we have our ups and downs but i want us to remember our good times more, I love you baby, and i am proud of you <3")
-input("Hit enter to continue")
-print("Survey finished")
+    if st.button("Submit"):
+        if answer == "d":
+            st.success("CORRECT ANSWER WOHOOO 🥰")
+            next_step()
+        else:
+            st.error("Haha, close one.. try again")
+
+# STEP 7
+elif st.session_state.step == 7:
+    st.write("GREAT, next one's a rhetorical question")
+    if st.button("Continue"):
+        next_step()
+
+# STEP 8
+elif st.session_state.step == 8:
+    st.write("Who is the most beautiful girl in the world?..any guesses?")
+    if st.button("Reveal Answer"):
+        next_step()
+
+# STEP 9
+elif st.session_state.step == 9:
+    st.success("YES YOU GUESSED IT RIGHT..ITS YOUUUUUU 💖")
+    if st.button("Continue"):
+        next_step()
+
+# STEP 10
+elif st.session_state.step == 10:
+    st.write("Now the last and most important question...hold your breath...")
+    if st.button("Start Final Question"):
+        next_step()
+
+# STEP 11 - Final Question
+elif st.session_state.step == 11:
+    answer = st.text_input("DO YOU LOVE ME? (i dare you to say no)")
+
+    if st.button("Submit"):
+        if answer.lower() == "yes":
+            st.success("I LOVE YOU TOO BABY ❤️")
+            next_step()
+
+        else:
+            st.session_state.attempt += 1
+
+            if st.session_state.attempt == 1:
+                st.warning("WRONG haha say no again i dare you")
+
+            elif st.session_state.attempt == 2:
+                st.warning("PLSS SAY YESSS PLSSSSSSSSSS")
+
+            else:
+                st.warning("I GOT ALL DAY UNTILL YOU SAY YESS")
+
+# STEP 12
+elif st.session_state.step == 12:
+    st.write(
+        "I know we have our ups and downs but I want us to remember our good times more. "
+        "I love you baby, and I am proud of you ❤️"
+    )
+
+    if st.button("Finish Survey"):
+        next_step()
+
+# STEP 13
+elif st.session_state.step == 13:
+    st.balloons()
+    st.success("Survey finished 💖")
